@@ -3,107 +3,116 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f7f7f4">
-    <meta name="description" content="个人设计作品集">
+    <meta name="theme-color" content="rgb(255, 255, 255)">
+    <meta name="description" content="张子文的个人设计作品集">
     <title>张子文 — Portfolio</title>
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="/styles.css">
-    <script src="/script.js" defer></script>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./script.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#work">跳到作品</a>
-    <main>
-      <header class="hero" data-theme="#f7f7f4">
-        <div class="shell hero-inner">
-          <p class="eyebrow">你好，我是</p>
-          <h1>张子<span>文</span></h1>
-          <p class="intro">我设计产品，也把它们做出来。</p>
-        </div>
-        <svg class="wave wave-bottom" aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 50C210 18 398 94 671 80c298-16 466 24 769-39v79H0z"/></svg>
+    <main class="page">
+      <header class="section hero" data-theme-color="rgb(255, 255, 255)">
+        <div class="hero-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="main-content-wrapper"><div class="content">
+          <p>你好，我是</p>
+          <h1>张子<span class="quiet-name">文</span></h1>
+          <p>我设计产品，也把它们做出来</p>
+        </div></div>
+        <div class="hero-bridge" aria-hidden="true"></div>
       </header>
 
-      <section class="project project-dark" id="work" data-theme="#101113">
-        <div class="shell project-inner">
-          <div class="copy">
-            <p class="year">2026 · 产品设计</p>
-            <h2>Project One</h2>
-            <p>一句清楚的项目介绍：它为谁解决了什么问题，以及你在其中承担的角色。</p>
-            <a class="project-link" href="#contact">查看项目 <span>→</span></a>
+      <section class="section project retro" id="work" data-theme-color="rgb(13, 13, 13)">
+        <div class="main-content-wrapper">
+          <div class="content">
+            <h2><span class="timestamp">2026</span><br>Project One</h2>
+            <p>这是我的核心作品。它把清晰的产品思考、视觉系统与可落地的体验连接在一起。</p>
+            <a class="external-link" href="#contact">查看项目</a>
           </div>
-          <div class="art art-orbit" aria-label="Project One 视觉占位">
-            <div class="icon-card primary"><span>01</span></div>
-            <div class="mini-card mini-a"><i></i><i></i><i></i></div>
-            <div class="mini-card mini-b"><b></b><b></b></div>
-          </div>
+          <div class="showcase showcase-icon" aria-label="Project One 作品图占位"><div class="app-icon warm"><span>子</span></div></div>
         </div>
-        <svg class="wave wave-bottom" aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 70c260 48 392-60 720-14 317 44 455-24 720-5v69H0z"/></svg>
+        <svg class="wave" viewBox="0 0 4323 250" preserveAspectRatio="none" aria-hidden="true"><path d="M4323 149C4092 101 3849 187 3412 203C2750 226 2639 41 2125 4C1683-28 1128 136 721 159C315 183 0 128 0 128V250H4323Z"/></svg>
       </section>
 
-      <section class="project project-silver" data-theme="#e8e9e8">
-        <div class="shell project-inner">
-          <div class="copy">
-            <p class="year">个人项目</p>
-            <h2>Project Two</h2>
-            <p>用一小段真实、有个性的文字讲清楚项目缘起，而不是堆砌功能列表。</p>
-            <a class="project-link" href="#contact">阅读案例 <span>→</span></a>
+      <section class="section project handmirror" data-theme-color="rgb(234, 233, 234)">
+        <div class="main-content-wrapper">
+          <div class="content">
+            <h2><span class="timestamp">个人项目</span><br>Project Two</h2>
+            <p>一个从真实需求出发的小工具。从周末原型开始，逐渐成为完整、克制又好用的产品。</p>
+            <p>这里可以继续补充项目背景、我的职责，以及最终带来的结果。</p>
+            <a class="external-link red-link" href="#contact">阅读案例</a>
           </div>
-          <div class="art art-stack" aria-label="Project Two 视觉占位">
-            <div class="window-card back"><div class="window-bar"></div></div>
-            <div class="window-card middle"><div class="window-bar"></div><div class="lines"></div></div>
-            <div class="icon-card front"><span>02</span></div>
+          <div class="showcase collage" aria-label="Project Two 作品图占位">
+            <div class="mock-card photo-card card-a"><div class="portrait"></div><span>DETAIL 01</span></div>
+            <div class="mock-card photo-card card-b"><div class="grid-art"></div><span>DETAIL 02</span></div>
+            <div class="app-icon steel card-c"><span>02</span></div>
+            <div class="mock-card screen-card card-d"><div class="window-dots"></div><b></b><b></b><b></b></div>
+            <div class="mock-card photo-card card-e"><div class="rings"></div></div>
           </div>
         </div>
-        <svg class="wave wave-bottom" aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 42c315 76 450-48 760 8 288 53 477-22 680-10v80H0z"/></svg>
+        <svg class="wave tall-wave" viewBox="0 0 4323 700" preserveAspectRatio="none" aria-hidden="true"><path d="M4323 35C4323 252 4226 549 3510 549C3135 549 3154 369 2565 393C2120 411 1140 507 733 549C327 591 0 562 0 562V700H4323Z"/></svg>
       </section>
 
-      <section class="project project-blue" data-theme="#2453ff">
-        <div class="shell project-inner">
-          <div class="copy">
-            <p class="year">2024–2025 · 品牌与体验</p>
-            <h2>Project Three</h2>
-            <p>展示你最有代表性的视觉系统、产品界面或品牌项目。</p>
-            <a class="project-link" href="#contact">访问作品 <span>→</span></a>
+      <section class="section project night" data-theme-color="rgb(5, 5, 5)">
+        <div class="main-content-wrapper">
+          <div class="content">
+            <h2><span class="timestamp">实验项目</span><br>Project Three</h2>
+            <p>一次关于氛围、光线与陪伴感的设计实验，把简单功能做得安静而有温度。</p>
+            <a class="external-link" href="#contact">查看设计</a>
           </div>
-          <div class="art art-dashboard" aria-label="Project Three 视觉占位">
-            <div class="browser-card">
-              <div class="browser-top"><i></i><i></i><i></i></div>
-              <div class="browser-grid"><b></b><b></b><b></b><b></b></div>
-            </div>
-            <div class="icon-card badge"><span>03</span></div>
+          <div class="showcase night-showcase" aria-label="Project Three 作品图占位">
+            <div class="app-icon moon"><span>☾</span></div>
+            <div class="mock-card night-panel"><i></i><strong>21:30</strong><small>GOOD NIGHT</small></div>
           </div>
         </div>
-        <svg class="wave wave-bottom" aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 67c209-49 439 29 683 17 263-13 498-74 757-29v65H0z"/></svg>
+        <svg class="wave" viewBox="0 0 4323 250" preserveAspectRatio="none" aria-hidden="true"><path d="M4323 149C4092 101 3849 187 3412 203C2750 226 2639 41 2125 4C1683-28 1128 136 721 159C315 183 0 128 0 128V250H4323Z"/></svg>
       </section>
 
-      <section class="project project-red" data-theme="#ff5a48">
-        <div class="shell project-inner">
-          <div class="copy">
-            <p class="year">实验项目</p>
-            <h2>Project Four</h2>
-            <p>这里适合放一个轻巧但有趣的作品，让整个作品集保留一点个人气质。</p>
-            <a class="project-link" href="#contact">了解更多 <span>→</span></a>
+      <section class="section project sketch" data-theme-color="rgb(255, 160, 0)">
+        <div class="main-content-wrapper">
+          <div class="content">
+            <h2><span class="timestamp">2024—2025</span><br>Project Four</h2>
+            <p>我负责了这套数字产品的界面、原型和视觉语言，并让设计能够稳定地进入开发流程。</p>
+            <a class="external-link dark-link" href="#contact">访问作品</a>
           </div>
-          <div class="art art-poster" aria-label="Project Four 视觉占位">
-            <div class="poster-card poster-back">MAKE</div>
-            <div class="poster-card poster-front"><small>IDEA / 04</small><strong>THINGS</strong></div>
+          <div class="showcase dashboard" aria-label="Project Four 作品图占位">
+            <div class="mock-card desktop-ui"><div class="toolbar"><i></i><i></i><i></i></div><div class="sidebar"></div><div class="canvas"><b></b><b></b><b></b></div></div>
+            <div class="app-icon amber"><span>04</span></div>
           </div>
         </div>
-        <svg class="wave wave-bottom" aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 48c274-15 423 88 740 44 335-46 480-19 700 9v19H0z"/></svg>
+        <svg class="wave" viewBox="0 0 4323 250" preserveAspectRatio="none" aria-hidden="true"><path d="M4323 149C4092 101 3849 187 3412 203C2750 226 2639 41 2125 4C1683-28 1128 136 721 159C315 183 0 128 0 128V250H4323Z"/></svg>
       </section>
 
-      <section class="about" id="contact" data-theme="#f7f7f4">
-        <div class="shell">
-          <p class="year">关于我</p>
-          <h2>也许我们可以<br>一起做点好东西。</h2>
-          <p class="about-copy">在这里补充你的经历、工作方式和目前关注的方向。</p>
-          <nav class="socials" aria-label="社交链接">
-            <a href="mailto:hello@example.com"><span>邮件</span><em>hello@example.com</em></a>
-            <a href="#"><span>小红书</span><em>@yourname</em></a>
-            <a href="#"><span>即刻</span><em>@yourname</em></a>
-            <a href="#"><span>GitHub</span><em>@yourname</em></a>
-          </nav>
-          <footer>© <span id="year"></span> 张子文 · 基于 Rafael Conde 的 ISC 开源项目重新设计</footer>
+      <section class="section project thwip" data-theme-color="rgb(6, 6, 6)">
+        <div class="main-content-wrapper">
+          <div class="content">
+            <h2><span class="timestamp">Side Project</span><br>Project Five</h2>
+            <p>一个更轻松、更有个性的侧项目。它保留了玩心，也展示了我如何把交互细节做到完整。</p>
+            <a class="external-link" href="#contact">了解更多</a>
+          </div>
+          <div class="showcase tiles" aria-label="Project Five 作品图占位">
+            <div class="sound-tile cyan">A</div><div class="sound-tile violet">B</div><div class="sound-tile pink">C</div><div class="sound-tile yellow">D</div>
+            <div class="phone"><div class="phone-screen"><span>PLAY</span><i></i><i></i><i></i></div></div>
+          </div>
         </div>
+        <svg class="wave tall-wave" viewBox="0 0 4323 700" preserveAspectRatio="none" aria-hidden="true"><path d="M0 35C0 252 251 426 958 516C2043 640 1871 376 2460 401C2904 419 3183 507 3590 549C3996 591 4323 562 4323 562V700H0Z"/></svg>
+      </section>
+
+      <section class="section about" id="contact" data-theme-color="rgb(255, 255, 255)">
+        <div class="main-content-wrapper about-wrapper"><div class="content wide">
+          <h3>更多关于张子文</h3>
+          <p>我关注产品设计、品牌与创意技术，也喜欢把想法亲手做成可以使用的东西。</p>
+          <ul class="about-grid">
+            <li><span class="mini-icon">✦</span><div><h4>作品与经历</h4><p>这里将替换为你的真实履历与项目说明。</p></div></li>
+            <li><span class="mini-icon">↗</span><div><h4>GitHub</h4><p>查看我的代码与持续更新。</p></div><a href="https://github.com/zhizhi02190016-boop" aria-label="GitHub"></a></li>
+            <li><span class="mini-icon">@</span><div><h4>联系我</h4><p>欢迎讨论设计、合作与有趣的新想法。</p></div><a href="mailto:zhizhi02190016@gmail.com" aria-label="发送邮件"></a></li>
+          </ul>
+        </div></div>
+        <footer class="main-content-wrapper">
+          <p>Copyleft © <span id="year"></span> 张子文</p>
+          <p>界面参考 Rafael Conde 的公开作品集项目，并保留来源说明。</p>
+        </footer>
       </section>
     </main>
   </body>
