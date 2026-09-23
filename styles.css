@@ -6,6 +6,8 @@
 /* 单个作品圆形图标（如 Clam 品牌动态标志） */
 .brand-collage .brand-card.is-circle{border-radius:50%}
 .brand-collage .brand-card.is-circle img{border-radius:50%}
+/* 单个作品竖版卡（如 CLAM COFFEE 4:5 海报） */
+.brand-collage .brand-card.is-portrait{height:296px}
 .bc-a{top:28px;left:4px;transform:rotate(-8deg)}
 .bc-b{top:8px;right:4px;transform:rotate(6deg)}
 .bc-c{bottom:36px;left:88px;transform:rotate(-4deg)}
