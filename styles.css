@@ -38,5 +38,7 @@
 .proj-meta{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:6px;font-size:14px;opacity:.55}
 .proj-body{display:grid;gap:40px;max-width:1200px;margin-top:44px}
 .proj-body img{display:block;width:100%;border-radius:16px;box-shadow:0 4px 24px #0e1e2520}
-.proj-video video{display:block;width:100%;border-radius:16px;box-shadow:0 4px 24px #0e1e2514;background:#111}
+.proj-video video{display:block;width:auto;max-width:100%;max-height:82vh;margin:0 auto;object-fit:contain;border-radius:16px;box-shadow:0 4px 24px #0e1e2514;background:#111}
 .proj-video{max-width:760px;margin:44px auto 0}
+/* 全屏时强制完整显示（竖版视频不裁切） */
+video:fullscreen,video:-webkit-full-screen{width:100vw!important;height:100vh!important;max-width:none!important;max-height:none!important;object-fit:contain!important;border-radius:0!important;box-shadow:none!important;margin:0!important;background:#000}
