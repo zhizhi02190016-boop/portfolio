@@ -21,6 +21,8 @@
 .brand-collage .brand-idx{z-index:3;top:146px;left:118px;width:250px;height:250px;transform:rotate(-3deg);color:#fff;background:linear-gradient(145deg,#6e767f 0%,#191c20 52%,#000000 92%)}
 /* 编辑拼贴为四角布局，中心空隙更大：序号卡再下移保持四张卡遮挡均衡 */
 .handmirror .brand-idx{top:171px}
+/* 01 序号卡专属：柔和灰阶渐变 #D8D8D8→#2B2B2B，45° 对角线 */
+.brand-collage .brand-idx.idx-soft{background:linear-gradient(135deg,#D8D8D8 0%,#2B2B2B 100%)}
 /* 拼贴容器锁定 490×600：窄屏只整体等比缩放，序号卡与作品的叠压关系全尺寸一致 */
 /* 拼贴容器锁定 490×600：窄屏只整体等比缩放，序号卡与作品的叠压关系全尺寸一致 */
 .project .showcase.brand-collage{width:490px;height:600px}
