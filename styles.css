@@ -23,6 +23,8 @@
 .handmirror .brand-idx{top:171px}
 /* 01 序号卡专属：高对比灰阶渐变 #F0F0EC→#050505，45° 对角线 */
 .brand-collage .brand-idx.idx-soft{background:linear-gradient(135deg,#F0F0EC 0%,#050505 100%)}
+/* 02 序号卡专属：高对比黑白渐变 #D8D8D8→#050506，45° 对角线 */
+.brand-collage .brand-idx.idx-mono{background:linear-gradient(135deg,#D8D8D8 0%,#050506 100%)}
 /* 拼贴容器锁定 490×600：窄屏只整体等比缩放，序号卡与作品的叠压关系全尺寸一致 */
 /* 拼贴容器锁定 490×600：窄屏只整体等比缩放，序号卡与作品的叠压关系全尺寸一致 */
 .project .showcase.brand-collage{width:490px;height:600px}
