@@ -16,7 +16,7 @@
 .ec-b{top:6px;right:0;transform:rotate(6deg)}
 .ec-c{bottom:8px;right:4px;transform:rotate(-5deg)}
 .ec-d{bottom:26px;left:0;transform:rotate(5deg)}
-.brand-collage .brand-idx{z-index:3;top:168px;left:170px;width:150px;height:150px;transform:rotate(-3deg);color:#fff;background:linear-gradient(145deg,#6e767f 0%,#191c20 52%,#000000 92%)}
+.brand-collage .brand-idx{z-index:3;top:296px;left:326px;width:150px;height:150px;transform:rotate(-3deg);color:#fff;background:linear-gradient(145deg,#6e767f 0%,#191c20 52%,#000000 92%)}
 .brand-collage .brand-idx{font-size:46px}
 /* 编辑拼贴为 4 卡布局，中间是空隙：序号卡移到压住左下卡片一角 */
 .handmirror .brand-idx{top:196px;left:148px}
