@@ -29,6 +29,9 @@
 .brand-collage .brand-idx.idx-soft{color:#101012;background:linear-gradient(135deg,#FFF1AE 0%,#EE6858 100%)}
 /* 02 序号卡专属：高对比黑白渐变 #D8D8D8→#050506，45° 对角线 */
 .brand-collage .brand-idx.idx-mono{color:#101012;background:linear-gradient(135deg,#FFD1A3 0%,#A72859 100%)}
+/* 05 板块序号卡：替换原手机模型，浅青→深青渐变（135° 对角线，深字同 01/02） */
+.tiles .brand-idx{z-index:3;top:168px;left:296px;width:250px;height:250px;transform:rotate(-3deg)}
+.tiles .brand-idx.idx-teal{color:#101012;background:linear-gradient(135deg,#C9F5F0 0%,#2FA69F 100%)}
 /* 拼贴容器锁定 490×600：窄屏只整体等比缩放，序号卡与作品的叠压关系全尺寸一致 */
 /* 拼贴容器锁定 490×600：窄屏只整体等比缩放，序号卡与作品的叠压关系全尺寸一致 */
 .project .showcase.brand-collage{width:490px;height:600px}
