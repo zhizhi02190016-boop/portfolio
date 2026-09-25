@@ -38,6 +38,18 @@ function initPosterSphere() {
   const rotor = sphere.querySelector('[data-sphere-rotor]');
   const radius = 188;
   const goldenAngle = 137.507764;
+  const sphereItems = [];
+
+  const addSphereItem = (element, latitude, longitude, itemRadius) => {
+    const lat = latitude * Math.PI / 180;
+    const lon = longitude * Math.PI / 180;
+    sphereItems.push({
+      element,
+      x: itemRadius * Math.cos(lat) * Math.sin(lon),
+      y: -itemRadius * Math.sin(lat),
+      z: itemRadius * Math.cos(lat) * Math.cos(lon),
+    });
+  };
 
   posterProjects.forEach((project, index) => {
     const y = 1 - (2 * (index + 0.5)) / posterProjects.length;
@@ -51,11 +63,9 @@ function initPosterSphere() {
     link.href = project.href;
     link.draggable = false;
     link.setAttribute('aria-label', `查看${project.title}`);
-    link.style.setProperty('--poster-lat', `${latitude.toFixed(2)}deg`);
-    link.style.setProperty('--poster-lon', `${longitude.toFixed(2)}deg`);
-    link.style.setProperty('--sphere-radius', `${radius}px`);
     link.append(createPosterFace(project));
     rotor.append(link);
+    addSphereItem(link, latitude, longitude, radius);
   });
 
   const hub = document.createElement('a');
@@ -63,11 +73,9 @@ function initPosterSphere() {
   hub.href = 'poster.html';
   hub.draggable = false;
   hub.setAttribute('aria-label', '查看海报与字体实验作品总览');
-  hub.style.setProperty('--poster-lat', '0deg');
-  hub.style.setProperty('--poster-lon', '0deg');
-  hub.style.setProperty('--sphere-radius', `${radius + 10}px`);
   hub.innerHTML = '<span class="sphere-hub-face"><strong>04</strong><small>VIEW ALL</small></span>';
   rotor.append(hub);
+  addSphereItem(hub, 0, 0, radius + 10);
 
   let rotateX = -7;
   let rotateY = 0;
@@ -82,7 +90,21 @@ function initPosterSphere() {
   let inertiaFrame = 0;
 
   const render = () => {
-    rotor.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    const xAngle = rotateX * Math.PI / 180;
+    const yAngle = rotateY * Math.PI / 180;
+    const cosX = Math.cos(xAngle);
+    const sinX = Math.sin(xAngle);
+    const cosY = Math.cos(yAngle);
+    const sinY = Math.sin(yAngle);
+
+    sphereItems.forEach(({ element, x, y, z }) => {
+      const rotatedX = x * cosY + z * sinY;
+      const rotatedZ = -x * sinY + z * cosY;
+      const rotatedY = y * cosX - rotatedZ * sinX;
+      const finalZ = y * sinX + rotatedZ * cosX;
+      element.style.transform = `translate3d(${rotatedX.toFixed(2)}px, ${rotatedY.toFixed(2)}px, ${finalZ.toFixed(2)}px)`;
+      element.style.zIndex = String(Math.round(finalZ + 300));
+    });
   };
 
   const stopInertia = () => cancelAnimationFrame(inertiaFrame);
