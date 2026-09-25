@@ -39,25 +39,47 @@ function initPosterSphere() {
   const radius = 194;
   const goldenAngle = 137.507764;
   const sphereItems = [];
+  const totalPoints = posterProjects.length + 1;
+  const unitPoints = Array.from({ length: totalPoints }, (_, index) => {
+    const y = 1 - (2 * (index + 0.5)) / totalPoints;
+    const ringRadius = Math.sqrt(1 - y * y);
+    const angle = index * goldenAngle * Math.PI / 180;
+    return { x: ringRadius * Math.sin(angle), y: -y, z: ringRadius * Math.cos(angle) };
+  });
+  const hubPointIndex = unitPoints.reduce((best, point, index, points) => point.z > points[best].z ? index : best, 0);
+  const hubPoint = unitPoints[hubPointIndex];
+  const alignY = -Math.atan2(hubPoint.x, hubPoint.z);
+  const cosAlignY = Math.cos(alignY);
+  const sinAlignY = Math.sin(alignY);
+  const hubAfterY = {
+    x: hubPoint.x * cosAlignY + hubPoint.z * sinAlignY,
+    y: hubPoint.y,
+    z: -hubPoint.x * sinAlignY + hubPoint.z * cosAlignY,
+  };
+  const alignX = Math.atan2(hubAfterY.y, hubAfterY.z);
+  const cosAlignX = Math.cos(alignX);
+  const sinAlignX = Math.sin(alignX);
+  const alignedPoints = unitPoints.map((point) => {
+    const x = point.x * cosAlignY + point.z * sinAlignY;
+    const z = -point.x * sinAlignY + point.z * cosAlignY;
+    return {
+      x,
+      y: point.y * cosAlignX - z * sinAlignX,
+      z: point.y * sinAlignX + z * cosAlignX,
+    };
+  });
+  const posterPoints = alignedPoints.filter((_, index) => index !== hubPointIndex);
 
-  const addSphereItem = (element, latitude, longitude, itemRadius) => {
-    const lat = latitude * Math.PI / 180;
-    const lon = longitude * Math.PI / 180;
+  const addSphereItem = (element, point, itemRadius) => {
     sphereItems.push({
       element,
-      x: itemRadius * Math.cos(lat) * Math.sin(lon),
-      y: -itemRadius * Math.sin(lat),
-      z: itemRadius * Math.cos(lat) * Math.cos(lon),
+      x: itemRadius * point.x,
+      y: itemRadius * point.y,
+      z: itemRadius * point.z,
     });
   };
 
   posterProjects.forEach((project, index) => {
-    const y = 1 - (2 * (index + 0.5)) / posterProjects.length;
-    let latitude = Math.asin(y) * 180 / Math.PI;
-    let longitude = (index * goldenAngle + 54) % 360;
-    const signedLongitude = longitude > 180 ? longitude - 360 : longitude;
-    if (Math.abs(signedLongitude) < 30 && Math.abs(latitude) < 24) longitude += 42;
-
     const link = document.createElement('a');
     link.className = 'sphere-poster';
     link.href = project.href;
@@ -65,7 +87,7 @@ function initPosterSphere() {
     link.setAttribute('aria-label', `查看${project.title}`);
     link.append(createPosterFace(project));
     rotor.append(link);
-    addSphereItem(link, latitude, longitude, radius);
+    addSphereItem(link, posterPoints[index], radius);
   });
 
   const hub = document.createElement('a');
@@ -75,9 +97,9 @@ function initPosterSphere() {
   hub.setAttribute('aria-label', '查看海报与字体实验作品总览');
   hub.innerHTML = '<span class="sphere-hub-face"><strong>04</strong><small>VIEW ALL</small></span>';
   rotor.append(hub);
-  addSphereItem(hub, 0, 0, radius + 10);
+  addSphereItem(hub, alignedPoints[hubPointIndex], radius + 10);
 
-  let rotateX = -7;
+  let rotateX = 0;
   let rotateY = 0;
   let dragging = false;
   let dragged = false;
