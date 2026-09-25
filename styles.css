@@ -99,7 +99,6 @@ video:fullscreen,video:-webkit-full-screen{width:100vw!important;height:100vh!im
 .sphere-hub-face strong{font:850 46px/1 var(--rounded);letter-spacing:-.08em}
 .sphere-hub-face small{margin-top:-31px;font-size:7px;font-weight:800;letter-spacing:.16em}
 .sphere-hub:hover .sphere-hub-face,.sphere-hub:focus-visible .sphere-hub-face{transform:translateZ(16px) scale(1.06)}
-.poster-sphere-hint{position:absolute;bottom:17px;left:50%;padding:7px 12px;border:1px solid #ffffff38;border-radius:999px;background:#0d0d0d21;font-size:11px;font-weight:650;letter-spacing:.08em;opacity:.76;transform:translateX(-50%);white-space:nowrap;pointer-events:none}
 
 /* 04 作品总览 */
 .poster-overview-hero{padding:90px 0 64px;color:#fff;background:#3457C9}
@@ -125,5 +124,5 @@ video:fullscreen,video:-webkit-full-screen{width:100vw!important;height:100vh!im
 
 @media(max-width:1200px){.poster-wall{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:780px){.poster-wall{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 16px}.poster-detail-frame{min-height:620px;padding:44px 20px}}
-@media(max-width:520px){.poster-sphere-showcase{min-height:600px!important}.poster-sphere-stage{transform:scale(.9)}.poster-sphere-hint{bottom:42px}.poster-overview-hero{padding-top:64px}.poster-wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 14px}.poster-wall-label{display:block}.poster-wall-label small{display:block;margin-top:4px}.poster-detail-frame{min-height:500px;padding:30px 14px}.poster-detail-art{width:76vw;padding:22px;border-width:9px}.poster-detail-art strong{font-size:72px}.poster-detail-art .poster-card-kicker{font-size:11px}}
+@media(max-width:520px){.poster-sphere-showcase{min-height:600px!important}.poster-sphere-stage{transform:scale(.9)}.poster-overview-hero{padding-top:64px}.poster-wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 14px}.poster-wall-label{display:block}.poster-wall-label small{display:block;margin-top:4px}.poster-detail-frame{min-height:500px;padding:30px 14px}.poster-detail-art{width:76vw;padding:22px;border-width:9px}.poster-detail-art strong{font-size:72px}.poster-detail-art .poster-card-kicker{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.poster-card-face,.sphere-hub-face,.poster-wall-art{transition:none}}

@@ -126,7 +126,6 @@ function initPosterSphere() {
     startX = lastX = event.clientX;
     startY = lastY = event.clientY;
     velocityX = velocityY = 0;
-    stage.setPointerCapture(event.pointerId);
     stage.classList.add('is-dragging');
   });
 
@@ -134,7 +133,10 @@ function initPosterSphere() {
     if (!dragging) return;
     const dx = event.clientX - lastX;
     const dy = event.clientY - lastY;
-    if (Math.hypot(event.clientX - startX, event.clientY - startY) > 6) dragged = true;
+    if (Math.hypot(event.clientX - startX, event.clientY - startY) > 6) {
+      dragged = true;
+      if (!stage.hasPointerCapture(event.pointerId)) stage.setPointerCapture(event.pointerId);
+    }
     rotateY += dx * 0.32;
     rotateX = Math.max(-70, Math.min(70, rotateX - dy * 0.24));
     velocityY = dx * 0.18;
