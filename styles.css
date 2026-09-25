@@ -78,8 +78,8 @@ video:fullscreen,video:-webkit-full-screen{width:100vw!important;height:100vh!im
 .poster-sphere-stage:focus-visible{outline:3px solid #fff;outline-offset:8px;border-radius:50%}
 .poster-sphere-stage.is-dragging{cursor:grabbing}
 .poster-sphere-rotor{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
-.sphere-poster{position:absolute;top:50%;left:50%;width:72px;height:100px;margin:-50px 0 0 -36px;color:#101012;text-decoration:none;transform-style:preserve-3d;transform:translate3d(0,0,0);will-change:transform,opacity,filter}
-.poster-card-face{position:relative;display:flex;flex-direction:column;justify-content:space-between;width:100%;height:100%;overflow:hidden;padding:9px;border:4px solid #fff;border-radius:8px;box-shadow:0 12px 24px #0d0d0d45;transition:transform .2s ease,filter .2s ease;backface-visibility:hidden}
+.sphere-poster{position:absolute;top:50%;left:50%;width:84px;height:116px;margin:-58px 0 0 -42px;color:#101012;text-decoration:none;transform-style:preserve-3d;transform:translate3d(0,0,0);will-change:transform}
+.poster-card-face{position:relative;display:flex;flex-direction:column;justify-content:space-between;width:100%;height:100%;overflow:hidden;padding:9px;border:3px solid #fff;border-radius:6px;box-shadow:0 14px 26px #0d0d0d59;transition:transform .2s ease,filter .2s ease;backface-visibility:hidden}
 .sphere-poster:hover .poster-card-face,.sphere-poster:focus-visible .poster-card-face{transform:translateZ(14px) scale(1.12);filter:brightness(1.08)}
 .sphere-poster:focus-visible{outline:none}
 .poster-card-face:before,.poster-card-face:after{content:"";position:absolute;border:2px solid currentColor;border-radius:50%;opacity:.38}
