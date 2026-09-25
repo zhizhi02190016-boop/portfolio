@@ -70,3 +70,60 @@
 .proj-video{max-width:760px;margin:44px auto 0}
 /* 全屏时强制完整显示（竖版视频不裁切） */
 video:fullscreen,video:-webkit-full-screen{width:100vw!important;height:100vh!important;max-width:none!important;max-height:none!important;object-fit:contain!important;border-radius:0!important;box-shadow:none!important;margin:0!important;background:#000}
+
+/* 04 海报球体：不自动旋转，仅响应拖动、触控与方向键 */
+.poster-sphere-showcase{display:grid;place-items:center;min-height:560px!important;cursor:default!important}
+.poster-sphere-stage{position:relative;width:500px;height:500px;perspective:920px;touch-action:none;cursor:grab;outline:none;-webkit-tap-highlight-color:transparent}
+.poster-sphere-stage:before{content:"";position:absolute;inset:72px;border:1px solid #ffffff30;border-radius:50%;background:radial-gradient(circle at 42% 38%,#ffffff1f 0,transparent 58%);box-shadow:inset -40px -36px 70px #0d0d0d26;pointer-events:none}
+.poster-sphere-stage:focus-visible{outline:3px solid #fff;outline-offset:8px;border-radius:50%}
+.poster-sphere-stage.is-dragging{cursor:grabbing}
+.poster-sphere-rotor{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
+.sphere-poster{position:absolute;top:50%;left:50%;width:76px;height:106px;margin:-53px 0 0 -38px;color:#101012;text-decoration:none;transform-style:preserve-3d;transform:rotateY(var(--poster-lon)) rotateX(var(--poster-lat)) translateZ(var(--sphere-radius));backface-visibility:hidden}
+.poster-card-face{position:relative;display:flex;flex-direction:column;justify-content:space-between;width:100%;height:100%;overflow:hidden;padding:9px;border:4px solid #fff;border-radius:8px;box-shadow:0 12px 24px #0d0d0d45;transition:transform .2s ease,filter .2s ease;backface-visibility:hidden}
+.sphere-poster:hover .poster-card-face,.sphere-poster:focus-visible .poster-card-face{transform:translateZ(14px) scale(1.12);filter:brightness(1.08)}
+.sphere-poster:focus-visible{outline:none}
+.poster-card-face:before,.poster-card-face:after{content:"";position:absolute;border:2px solid currentColor;border-radius:50%;opacity:.38}
+.poster-card-face:before{right:-18px;bottom:18px;width:62px;height:62px}
+.poster-card-face:after{right:9px;bottom:7px;width:28px;height:28px}
+.poster-card-kicker{position:relative;z-index:1;font-size:6px;font-weight:800;letter-spacing:.16em}
+.poster-card-face strong{position:relative;z-index:1;font:850 25px/1 var(--rounded);letter-spacing:-.08em}
+.poster-card-face i{position:relative;z-index:1;width:52%;height:3px;background:currentColor;opacity:.7}
+.poster-tone-1{background:linear-gradient(145deg,#ECD78A,#C66D00)}
+.poster-tone-2{background:linear-gradient(145deg,#FFC698,#D55753)}
+.poster-tone-3{color:#fff;background:linear-gradient(145deg,#FFBDE1,#8771DE)}
+.poster-tone-4{color:#fff;background:linear-gradient(145deg,#87E7FF,#7577E3)}
+.poster-tone-5{color:#fff;background:linear-gradient(145deg,#A1ECBB,#009BC1)}
+.poster-tone-6{color:#fff;background:linear-gradient(145deg,#8d969d,#121417)}
+.sphere-hub{z-index:5;width:132px;height:132px;margin:-66px 0 0 -66px}
+.sphere-hub-face{display:grid;place-items:center;width:100%;height:100%;border:5px solid #ffffffd9;border-radius:29px;color:#fff;background:linear-gradient(135deg,#87E7FF,#7577E3);box-shadow:0 22px 42px #0d0d0d6b;transition:transform .2s ease;backface-visibility:hidden}
+.sphere-hub-face strong{font:850 46px/1 var(--rounded);letter-spacing:-.08em}
+.sphere-hub-face small{margin-top:-31px;font-size:7px;font-weight:800;letter-spacing:.16em}
+.sphere-hub:hover .sphere-hub-face,.sphere-hub:focus-visible .sphere-hub-face{transform:translateZ(16px) scale(1.06)}
+.poster-sphere-hint{position:absolute;bottom:17px;left:50%;padding:7px 12px;border:1px solid #ffffff38;border-radius:999px;background:#0d0d0d21;font-size:11px;font-weight:650;letter-spacing:.08em;opacity:.76;transform:translateX(-50%);white-space:nowrap;pointer-events:none}
+
+/* 04 作品总览 */
+.poster-overview-hero{padding:90px 0 64px;color:#fff;background:#3457C9}
+.poster-overview{padding:20px 0 110px;color:#fff;background:#3457C9}
+.poster-wall{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:32px 22px;margin-top:34px}
+.poster-wall-card{display:block;min-width:0;color:#fff;text-decoration:none}
+.poster-wall-art{aspect-ratio:3/4;height:auto;border-width:7px;border-radius:15px;box-shadow:0 18px 38px #0d0d0d38;transition:transform .28s cubic-bezier(.83,0,.17,1),box-shadow .28s}
+.poster-wall-card:nth-child(3n+1) .poster-wall-art{transform:rotate(-1.3deg)}
+.poster-wall-card:nth-child(3n+2) .poster-wall-art{transform:rotate(.9deg)}
+.poster-wall-card:hover .poster-wall-art,.poster-wall-card:focus-visible .poster-wall-art{transform:translateY(-10px) rotate(0);box-shadow:0 26px 48px #0d0d0d52}
+.poster-wall-label{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:13px}
+.poster-wall-label strong{font-size:15px}
+.poster-wall-label small{font-size:11px;opacity:.62;white-space:nowrap}
+
+/* 临时作品详情页 */
+.poster-detail-hero{padding:80px 0 48px;color:#fff;background:#3457C9}
+.poster-detail-section{padding:12px 0 110px;background:#3457C9}
+.poster-detail-frame{display:grid;place-items:center;min-height:760px;padding:70px;border:1px solid #ffffff2e;border-radius:28px;background:#ffffff12}
+.poster-detail-art{width:min(560px,70vw);height:auto;aspect-ratio:3/4;padding:38px;border-width:14px;border-radius:24px;box-shadow:0 34px 72px #0d0d0d59}
+.poster-detail-art .poster-card-kicker{font-size:16px}
+.poster-detail-art strong{font-size:112px}
+.poster-detail-art i{height:8px}
+
+@media(max-width:1200px){.poster-wall{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:780px){.poster-wall{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 16px}.poster-detail-frame{min-height:620px;padding:44px 20px}}
+@media(max-width:520px){.poster-sphere-showcase{min-height:600px!important}.poster-sphere-stage{transform:scale(.9)}.poster-sphere-hint{bottom:42px}.poster-overview-hero{padding-top:64px}.poster-wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 14px}.poster-wall-label{display:block}.poster-wall-label small{display:block;margin-top:4px}.poster-detail-frame{min-height:500px;padding:30px 14px}.poster-detail-art{width:76vw;padding:22px;border-width:9px}.poster-detail-art strong{font-size:72px}.poster-detail-art .poster-card-kicker{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.poster-card-face,.sphere-hub-face,.poster-wall-art{transition:none}}

@@ -7,8 +7,8 @@
     <meta name="description" content="张子文的个人设计作品集">
     <title>张子文 — Portfolio</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=36">
-    <script src="./script.js?v=2" defer></script>
+    <link rel="stylesheet" href="./styles.css?v=37">
+    <script src="./script.js?v=3" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#work">跳到作品</a>
@@ -105,16 +105,18 @@
         <svg class="wave" viewBox="0 0 4323 250" preserveAspectRatio="none" aria-hidden="true"><path d="M4323 149C4092 101 3849 187 3412 203C2750 226 2639 41 2125 4C1683-28 1128 136 721 159C315 183 0 128 0 128V250H4323Z"/></svg>
       </section>
 
-      <section class="section project sketch" data-theme-color="rgb(52, 87, 201)">
+      <section class="section project sketch" id="poster-sphere-section" data-theme-color="rgb(52, 87, 201)">
         <div class="main-content-wrapper">
           <div class="content">
             <h2><span class="timestamp">海报与字体实验</span><br>Poster &amp; Typography</h2>
             <p>海报系列、字体设计、实验排版和文字视觉研究。</p>
             <a class="external-link" href="poster.html">访问作品</a>
           </div>
-          <div class="showcase dashboard" aria-label="Project Four 作品图占位">
-            <div class="mock-card desktop-ui"><div class="toolbar"><i></i><i></i><i></i></div><div class="sidebar"></div><div class="canvas"><b></b><b></b><b></b></div></div>
-            <div class="app-icon amber"><span>04</span></div>
+          <div class="showcase poster-sphere-showcase" data-poster-sphere aria-label="可拖动的海报作品球体">
+            <div class="poster-sphere-stage" data-sphere-stage tabindex="0" aria-label="拖动或使用方向键旋转海报球体">
+              <div class="poster-sphere-rotor" data-sphere-rotor></div>
+            </div>
+            <span class="poster-sphere-hint" aria-hidden="true">拖动浏览 · 点击查看</span>
           </div>
         </div>
         <svg class="wave" viewBox="0 0 4323 250" preserveAspectRatio="none" aria-hidden="true"><path d="M4323 149C4092 101 3849 187 3412 203C2750 226 2639 41 2125 4C1683-28 1128 136 721 159C315 183 0 128 0 128V250H4323Z"/></svg>
