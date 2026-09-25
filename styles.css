@@ -73,12 +73,12 @@ video:fullscreen,video:-webkit-full-screen{width:100vw!important;height:100vh!im
 
 /* 04 海报球体：不自动旋转，仅响应拖动、触控与方向键 */
 .poster-sphere-showcase{display:grid;place-items:center;min-height:560px!important;cursor:default!important}
-.poster-sphere-stage{position:relative;width:500px;height:500px;perspective:920px;touch-action:none;cursor:grab;outline:none;-webkit-tap-highlight-color:transparent}
+.poster-sphere-stage{position:relative;width:500px;height:500px;perspective:720px;touch-action:none;cursor:grab;outline:none;-webkit-tap-highlight-color:transparent}
 .poster-sphere-stage:before{content:"";position:absolute;inset:72px;border:1px solid #ffffff30;border-radius:50%;background:radial-gradient(circle at 42% 38%,#ffffff1f 0,transparent 58%);box-shadow:inset -40px -36px 70px #0d0d0d26;pointer-events:none}
 .poster-sphere-stage:focus-visible{outline:3px solid #fff;outline-offset:8px;border-radius:50%}
 .poster-sphere-stage.is-dragging{cursor:grabbing}
 .poster-sphere-rotor{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
-.sphere-poster{position:absolute;top:50%;left:50%;width:76px;height:106px;margin:-53px 0 0 -38px;color:#101012;text-decoration:none;transform-style:preserve-3d;transform:translate3d(0,0,0);will-change:transform}
+.sphere-poster{position:absolute;top:50%;left:50%;width:68px;height:95px;margin:-47.5px 0 0 -34px;color:#101012;text-decoration:none;transform-style:preserve-3d;transform:translate3d(0,0,0);will-change:transform,opacity,filter}
 .poster-card-face{position:relative;display:flex;flex-direction:column;justify-content:space-between;width:100%;height:100%;overflow:hidden;padding:9px;border:4px solid #fff;border-radius:8px;box-shadow:0 12px 24px #0d0d0d45;transition:transform .2s ease,filter .2s ease;backface-visibility:hidden}
 .sphere-poster:hover .poster-card-face,.sphere-poster:focus-visible .poster-card-face{transform:translateZ(14px) scale(1.12);filter:brightness(1.08)}
 .sphere-poster:focus-visible{outline:none}
@@ -94,10 +94,10 @@ video:fullscreen,video:-webkit-full-screen{width:100vw!important;height:100vh!im
 .poster-tone-4{color:#fff;background:linear-gradient(145deg,#87E7FF,#7577E3)}
 .poster-tone-5{color:#fff;background:linear-gradient(145deg,#A1ECBB,#009BC1)}
 .poster-tone-6{color:#fff;background:linear-gradient(145deg,#8d969d,#121417)}
-.sphere-hub{z-index:5;width:132px;height:132px;margin:-66px 0 0 -66px}
+.sphere-hub{z-index:5;width:112px;height:112px;margin:-56px 0 0 -56px}
 .sphere-hub-face{display:grid;place-items:center;width:100%;height:100%;border:5px solid #ffffffd9;border-radius:29px;color:#fff;background:linear-gradient(135deg,#87E7FF,#7577E3);box-shadow:0 22px 42px #0d0d0d6b;transition:transform .2s ease;backface-visibility:hidden}
-.sphere-hub-face strong{font:850 46px/1 var(--rounded);letter-spacing:-.08em}
-.sphere-hub-face small{margin-top:-31px;font-size:7px;font-weight:800;letter-spacing:.16em}
+.sphere-hub-face strong{font:850 40px/1 var(--rounded);letter-spacing:-.08em}
+.sphere-hub-face small{margin-top:-27px;font-size:6px;font-weight:800;letter-spacing:.16em}
 .sphere-hub:hover .sphere-hub-face,.sphere-hub:focus-visible .sphere-hub-face{transform:translateZ(16px) scale(1.06)}
 
 /* 04 作品总览 */

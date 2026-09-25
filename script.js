@@ -36,7 +36,7 @@ function initPosterSphere() {
 
   const stage = sphere.querySelector('[data-sphere-stage]');
   const rotor = sphere.querySelector('[data-sphere-rotor]');
-  const radius = 188;
+  const radius = 202;
   const goldenAngle = 137.507764;
   const sphereItems = [];
 
@@ -102,8 +102,11 @@ function initPosterSphere() {
       const rotatedZ = -x * sinY + z * cosY;
       const rotatedY = y * cosX - rotatedZ * sinX;
       const finalZ = y * sinX + rotatedZ * cosX;
+      const depth = Math.max(0, Math.min(1, (finalZ / radius + 1) / 2));
       element.style.transform = `translate3d(${rotatedX.toFixed(2)}px, ${rotatedY.toFixed(2)}px, ${finalZ.toFixed(2)}px)`;
       element.style.zIndex = String(Math.round(finalZ + 300));
+      element.style.opacity = (0.66 + depth * 0.34).toFixed(3);
+      element.style.filter = `blur(${((1 - depth) * 0.48).toFixed(2)}px)`;
     });
   };
 
