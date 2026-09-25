@@ -36,7 +36,7 @@ function initPosterSphere() {
 
   const stage = sphere.querySelector('[data-sphere-stage]');
   const rotor = sphere.querySelector('[data-sphere-rotor]');
-  const radius = 202;
+  const radius = 194;
   const goldenAngle = 137.507764;
   const sphereItems = [];
 
