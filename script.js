@@ -13,6 +13,34 @@ if (themeMeta && 'IntersectionObserver' in window) {
 const yearNode = document.querySelector('#year');
 if (yearNode) yearNode.textContent = new Date().getFullYear();
 
+const pageProgressKey = `portfolioPageProgress:${location.pathname}${location.search}`;
+const savePageProgress = () => {
+  sessionStorage.setItem(pageProgressKey, String(window.scrollY));
+};
+
+window.addEventListener('pagehide', savePageProgress);
+window.addEventListener('pageshow', (event) => {
+  const navigation = performance.getEntriesByType('navigation')[0];
+  if (!event.persisted && navigation?.type !== 'back_forward') return;
+  const savedScrollY = Number(sessionStorage.getItem(pageProgressKey));
+  if (Number.isFinite(savedScrollY)) requestAnimationFrame(() => window.scrollTo(0, savedScrollY));
+});
+
+document.querySelectorAll('[data-history-back]').forEach((link) => {
+  link.addEventListener('click', (event) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    let canGoBack = false;
+    try {
+      canGoBack = Boolean(document.referrer) && new URL(document.referrer).origin === location.origin && history.length > 1;
+    } catch (_) {
+      canGoBack = false;
+    }
+    if (!canGoBack) return;
+    event.preventDefault();
+    history.back();
+  });
+});
+
 const posterProjects = Array.from({ length: 30 }, (_, index) => {
   const id = String(index + 1).padStart(2, '0');
   return {
@@ -37,6 +65,7 @@ function initPosterSphere() {
   const stage = sphere.querySelector('[data-sphere-stage]');
   const rotor = sphere.querySelector('[data-sphere-rotor]');
   const radius = 170;
+  const sphereStateKey = 'portfolioPosterSphereState';
   const goldenAngle = 137.507764;
   const sphereItems = [];
   const totalPoints = posterProjects.length + 1;
@@ -99,8 +128,14 @@ function initPosterSphere() {
   rotor.append(hub);
   addSphereItem(hub, alignedPoints[hubPointIndex], radius + 10);
 
-  let rotateX = 0;
-  let rotateY = 0;
+  let savedSphereState = null;
+  try {
+    savedSphereState = JSON.parse(sessionStorage.getItem(sphereStateKey));
+  } catch (_) {
+    savedSphereState = null;
+  }
+  let rotateX = Number.isFinite(savedSphereState?.rotateX) ? savedSphereState.rotateX : 0;
+  let rotateY = Number.isFinite(savedSphereState?.rotateY) ? savedSphereState.rotateY : 0;
   let dragging = false;
   let dragged = false;
   let startX = 0;
@@ -132,6 +167,10 @@ function initPosterSphere() {
   };
 
   const stopInertia = () => cancelAnimationFrame(inertiaFrame);
+  const saveSphereState = () => {
+    sessionStorage.setItem(sphereStateKey, JSON.stringify({ rotateX, rotateY }));
+    savePageProgress();
+  };
   const runInertia = () => {
     velocityX *= 0.935;
     velocityY *= 0.935;
@@ -185,6 +224,9 @@ function initPosterSphere() {
     event.stopPropagation();
     dragged = false;
   }, true);
+  stage.addEventListener('click', (event) => {
+    if (event.target.closest('a')) saveSphereState();
+  });
 
   stage.addEventListener('keydown', (event) => {
     const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
