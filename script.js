@@ -177,6 +177,8 @@ function initPosterSphere() {
   let rotateY = Number.isFinite(savedSphereState?.rotateY) ? savedSphereState.rotateY : 0;
   let dragging = false;
   let dragged = false;
+  let activePointerId = null;
+  let captureElement = null;
   let startX = 0;
   let startY = 0;
   let lastX = 0;
@@ -222,7 +224,11 @@ function initPosterSphere() {
   };
 
   stage.addEventListener('pointerdown', (event) => {
+    if (activePointerId !== null || !event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
     stopInertia();
+    activePointerId = event.pointerId;
+    captureElement = event.target.closest?.('a') || stage;
+    captureElement.setPointerCapture(event.pointerId);
     dragging = true;
     dragged = false;
     startX = lastX = event.clientX;
@@ -232,12 +238,11 @@ function initPosterSphere() {
   });
 
   stage.addEventListener('pointermove', (event) => {
-    if (!dragging) return;
+    if (!dragging || event.pointerId !== activePointerId) return;
     const dx = event.clientX - lastX;
     const dy = event.clientY - lastY;
     if (Math.hypot(event.clientX - startX, event.clientY - startY) > 6) {
       dragged = true;
-      if (!stage.hasPointerCapture(event.pointerId)) stage.setPointerCapture(event.pointerId);
     }
     rotateY += dx * 0.32;
     rotateX = Math.max(-70, Math.min(70, rotateX - dy * 0.24));
@@ -249,14 +254,23 @@ function initPosterSphere() {
   });
 
   const release = (event) => {
-    if (!dragging) return;
+    if (!dragging || event.pointerId !== activePointerId) return;
     dragging = false;
+    activePointerId = null;
     stage.classList.remove('is-dragging');
-    if (stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);
-    runInertia();
+    if (captureElement?.hasPointerCapture(event.pointerId)) captureElement.releasePointerCapture(event.pointerId);
+    captureElement = null;
+    if (dragged && event.type === 'pointerup') runInertia();
   };
   stage.addEventListener('pointerup', release);
   stage.addEventListener('pointercancel', release);
+  stage.addEventListener('lostpointercapture', (event) => {
+    if (event.pointerId !== activePointerId) return;
+    dragging = false;
+    activePointerId = null;
+    captureElement = null;
+    stage.classList.remove('is-dragging');
+  });
   stage.addEventListener('dragstart', (event) => event.preventDefault());
   stage.addEventListener('selectstart', (event) => event.preventDefault());
   stage.addEventListener('click', (event) => {
