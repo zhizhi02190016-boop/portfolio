@@ -92,6 +92,7 @@ function createPosterFace(project, extraClass = '', fullSize = false) {
   image.alt = fullSize ? `${project.title}海报` : '';
   image.loading = fullSize ? 'eager' : 'lazy';
   image.decoding = 'async';
+  image.draggable = false;
   face.append(image);
   return face;
 }
@@ -256,6 +257,8 @@ function initPosterSphere() {
   };
   stage.addEventListener('pointerup', release);
   stage.addEventListener('pointercancel', release);
+  stage.addEventListener('dragstart', (event) => event.preventDefault());
+  stage.addEventListener('selectstart', (event) => event.preventDefault());
   stage.addEventListener('click', (event) => {
     if (!dragged) return;
     event.preventDefault();

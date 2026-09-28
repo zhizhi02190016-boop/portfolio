@@ -73,7 +73,8 @@ video:fullscreen,video:-webkit-full-screen{width:100vw!important;height:100vh!im
 
 /* 04 海报球体：不自动旋转，仅响应拖动、触控与方向键 */
 .poster-sphere-showcase{display:grid;place-items:center;min-height:560px!important;cursor:default!important}
-.poster-sphere-stage{position:relative;width:500px;height:500px;perspective:720px;touch-action:none;cursor:grab;outline:none;-webkit-tap-highlight-color:transparent}
+.poster-sphere-stage{position:relative;width:500px;height:500px;perspective:720px;touch-action:none;cursor:grab;outline:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+.poster-sphere-stage img{-webkit-user-drag:none}
 .poster-sphere-stage:before{content:"";position:absolute;inset:72px;border:1px solid #ffffff30;border-radius:50%;background:radial-gradient(circle at 42% 38%,#ffffff1f 0,transparent 58%);box-shadow:inset -40px -36px 70px #0d0d0d26;pointer-events:none}
 .poster-sphere-stage:focus-visible{outline:3px solid #fff;outline-offset:8px;border-radius:50%}
 .poster-sphere-stage.is-dragging{cursor:grabbing}
