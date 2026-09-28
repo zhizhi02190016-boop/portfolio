@@ -41,20 +41,58 @@ document.querySelectorAll('[data-history-back]').forEach((link) => {
   });
 });
 
-const posterProjects = Array.from({ length: 30 }, (_, index) => {
+const posterProjects = [
+  ['城市漫游节', '高对比数字与重复网格，呈现城市行走的节奏。'],
+  ['潮水有信', '深蓝与水母的轻盈形态，描绘潮汐中的来信。'],
+  ['飞燕', '红色飞燕与颗粒纹理，捕捉掠过纸面的速度。'],
+  ['中原回声', '纵向折叠的文字，传达城市声音的回响。'],
+  ['织网为戒，和美为归', '用网状海马的形态，关注海洋中的废弃渔网。'],
+  ['城市梦境', '倾斜堆叠的字母与撞色，制造鲜明的城市能量。'],
+  ['Nuclear Matter', '深蓝液态造型与金属字，形成冷冽的视觉张力。'],
+  ['鸢尾', '蓝紫色花卉与纤细文字，组成轻盈的双语海报。'],
+  ['河流记忆', '倾斜字形与荧光黄底，呈现河流记忆的流动感。'],
+  ['未归档', '重复字形围出留白，让信息在边框内生长。'],
+  ['织网为戒，和美为归', '用渔网织成鱼的形态，回应海洋保护的主题。'],
+  ['异想之翼', '粉色羽翼与暖黄底色，展开想象力的飞行。'],
+  ['I am Clam', '彩色字形与交错线条，呈现自由的字体实验。'],
+  ['潮汐来信', '明黄与粉色水母碰撞，写一封轻快的潮汐来信。'],
+  ['MOVE', '街景人物与涂鸦轨迹，定格跃动的一瞬。'],
+  ['塑缚龟命', '吸管与龟壳符号，传达减少塑料的主张。'],
+  ['关于生命·古建', '古建影像与信息分栏，连接历史纹理和当代排版。'],
+  ['塑料袋与鱼', '把文字折成塑料袋的形状，讨论废弃物的去向。'],
+  ['DON’T BE A SILLY CAT', '蓝底与猫咪剪贴，拼出俏皮的手写宣言。'],
+  ['Just Groove It', '萨克斯与橙蓝线条，让音乐节奏跃上纸面。'],
+  ['城市崛起', '黑白竖向文字与节奏条，勾勒城市向上的轮廓。'],
+  ['IDEA', '墨色在字体下方扩散，呈现灵感生成的瞬间。'],
+  ['织网为戒，和美为归', '以网格构成龙虾，延续海洋保护的视觉主题。'],
+  ['九命', '霓虹蓝紫包围猫的目光，营造夜行般的神秘感。'],
+  ['绽放', '花朵、蓝色字块与拼贴质感，构成蓬勃的生命力。'],
+  ['纸页呼吸', '细字与斜线分割留白，让文字成为画面的呼吸。'],
+  ['关于生命·石狮', '石狮影像与细线排版，呈现古老形象的生命力。'],
+  ['Golden Hour', '水母轮廓与暖橙颗粒，记录光线沉入海面的时刻。'],
+  ['地层回声', '字形压在锈蚀纹理上，呈现时间留下的痕迹。'],
+  ['拒犀', '犀牛剪影与大面积留白，留下关于保护的提问。'],
+].map(([title, summary], index) => {
   const id = String(index + 1).padStart(2, '0');
   return {
     id,
-    title: `作品 ${id}`,
+    title,
+    summary,
     href: `poster-detail.html?id=${id}`,
-    tone: `poster-tone-${(index % 6) + 1}`,
+    thumb: `images/posters/${id}-thumb.jpg`,
+    full: `images/posters/${id}-full.jpg`,
   };
 });
 
-function createPosterFace(project, extraClass = '') {
+function createPosterFace(project, extraClass = '', fullSize = false) {
   const face = document.createElement('span');
-  face.className = `poster-card-face ${project.tone} ${extraClass}`.trim();
-  face.innerHTML = `<span class="poster-card-kicker">POSTER</span><strong>${project.id}</strong><i></i>`;
+  face.className = `poster-card-face poster-image-face ${extraClass}`.trim();
+  const image = document.createElement('img');
+  image.src = fullSize ? project.full : project.thumb;
+  image.alt = fullSize ? `${project.title}海报` : '';
+  image.loading = fullSize ? 'eager' : 'lazy';
+  image.decoding = 'async';
+  face.append(image);
   return face;
 }
 
@@ -253,7 +291,9 @@ function initPosterGrid() {
     link.append(createPosterFace(project, 'poster-wall-art'));
     const label = document.createElement('span');
     label.className = 'poster-wall-label';
-    label.innerHTML = `<strong>${project.title}</strong><small>详情待补充</small>`;
+    const title = document.createElement('strong');
+    title.textContent = project.title;
+    label.append(title);
     link.append(label);
     grid.append(link);
   });
@@ -265,9 +305,11 @@ function initPosterDetail() {
   const requestedId = new URLSearchParams(location.search).get('id') || '01';
   const project = posterProjects.find((item) => item.id === requestedId) || posterProjects[0];
   const title = page.querySelector('[data-poster-title]');
+  const summary = page.querySelector('[data-poster-summary]');
   const art = page.querySelector('[data-poster-art]');
   if (title) title.textContent = project.title;
-  if (art) art.append(createPosterFace(project, 'poster-detail-art'));
+  if (summary) summary.textContent = project.summary;
+  if (art) art.append(createPosterFace(project, 'poster-detail-art', true));
   document.title = `${project.title}｜海报与字体实验 — 张子文`;
 }
 

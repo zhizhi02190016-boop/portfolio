@@ -80,6 +80,9 @@ video:fullscreen,video:-webkit-full-screen{width:100vw!important;height:100vh!im
 .poster-sphere-rotor{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
 .sphere-poster{position:absolute;top:50%;left:50%;width:84px;height:116px;margin:-58px 0 0 -42px;color:#101012;text-decoration:none;transform-style:preserve-3d;transform:translate3d(0,0,0);will-change:transform}
 .poster-card-face{position:relative;display:flex;flex-direction:column;justify-content:space-between;width:100%;height:100%;overflow:hidden;padding:9px;border:3px solid #fff;border-radius:6px;box-shadow:0 14px 26px #0d0d0d59;transition:transform .2s ease,filter .2s ease;backface-visibility:hidden}
+.poster-image-face{display:block;padding:0;background:#fff}
+.poster-image-face:before,.poster-image-face:after{display:none}
+.poster-image-face img{display:block;width:100%;height:100%;object-fit:contain}
 .sphere-poster:hover .poster-card-face,.sphere-poster:focus-visible .poster-card-face{transform:translateZ(14px) scale(1.12);filter:brightness(1.08)}
 .sphere-poster:focus-visible{outline:none}
 .poster-card-face:before,.poster-card-face:after{content:"";position:absolute;border:2px solid currentColor;border-radius:50%;opacity:.38}
@@ -117,12 +120,14 @@ video:fullscreen,video:-webkit-full-screen{width:100vw!important;height:100vh!im
 .poster-detail-hero{padding:80px 0 48px;color:#fff;background:#3457C9}
 .poster-detail-section{padding:12px 0 110px;background:#3457C9}
 .poster-detail-frame{display:grid;place-items:center;min-height:760px;padding:70px;border:1px solid #ffffff2e;border-radius:28px;background:#ffffff12}
-.poster-detail-art{width:min(560px,70vw);height:auto;aspect-ratio:3/4;padding:38px;border-width:14px;border-radius:24px;box-shadow:0 34px 72px #0d0d0d59}
+.poster-detail-summary{max-width:600px;font-size:18px;line-height:1.6;opacity:.9}
+.poster-detail-art{display:block;width:min(680px,100%);height:auto;aspect-ratio:auto;padding:0;border-width:10px;border-radius:16px;box-shadow:0 34px 72px #0d0d0d59}
+.poster-detail-art img{height:auto}
 .poster-detail-art .poster-card-kicker{font-size:16px}
 .poster-detail-art strong{font-size:112px}
 .poster-detail-art i{height:8px}
 
 @media(max-width:1200px){.poster-wall{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:780px){.poster-wall{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 16px}.poster-detail-frame{min-height:620px;padding:44px 20px}}
-@media(max-width:520px){.sketch{min-height:760px}.poster-sphere-showcase{min-height:500px!important;margin-bottom:-120px}.poster-sphere-stage{transform:scale(1.05)}.poster-overview-hero{padding-top:64px}.poster-wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 14px}.poster-wall-label{display:block}.poster-wall-label small{display:block;margin-top:4px}.poster-detail-frame{min-height:500px;padding:30px 14px}.poster-detail-art{width:76vw;padding:22px;border-width:9px}.poster-detail-art strong{font-size:72px}.poster-detail-art .poster-card-kicker{font-size:11px}}
+@media(max-width:520px){.sketch{min-height:760px}.poster-sphere-showcase{min-height:500px!important;margin-bottom:-120px}.poster-sphere-stage{transform:scale(1.05)}.poster-overview-hero{padding-top:64px}.poster-overview-hero h1{font-size:clamp(32px,9vw,40px);overflow-wrap:anywhere}.poster-wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 14px}.poster-wall-label{display:block}.poster-wall-label small{display:block;margin-top:4px}.poster-detail-frame{min-height:500px;padding:30px 14px}.poster-detail-art{width:100%;border-width:7px}.poster-detail-summary{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.poster-card-face,.sphere-hub-face,.poster-wall-art{transition:none}}
