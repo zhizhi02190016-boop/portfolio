@@ -173,8 +173,8 @@ function initPosterSphere() {
   } catch (_) {
     savedSphereState = null;
   }
-  let rotateX = Number.isFinite(savedSphereState?.rotateX) ? savedSphereState.rotateX : 0;
-  let rotateY = Number.isFinite(savedSphereState?.rotateY) ? savedSphereState.rotateY : 0;
+  let rotateX = Number.isFinite(savedSphereState?.rotateX) ? savedSphereState.rotateX % 360 : 0;
+  let rotateY = Number.isFinite(savedSphereState?.rotateY) ? savedSphereState.rotateY % 360 : 0;
   let dragging = false;
   let dragged = false;
   let activePointerId = null;
@@ -215,8 +215,8 @@ function initPosterSphere() {
   const runInertia = () => {
     velocityX *= 0.935;
     velocityY *= 0.935;
-    rotateX = Math.max(-70, Math.min(70, rotateX + velocityX));
-    rotateY += velocityY;
+    rotateX = (rotateX + velocityX) % 360;
+    rotateY = (rotateY + velocityY) % 360;
     render();
     if (Math.abs(velocityX) + Math.abs(velocityY) > 0.04) {
       inertiaFrame = requestAnimationFrame(runInertia);
@@ -244,8 +244,8 @@ function initPosterSphere() {
     if (Math.hypot(event.clientX - startX, event.clientY - startY) > 6) {
       dragged = true;
     }
-    rotateY += dx * 0.32;
-    rotateX = Math.max(-70, Math.min(70, rotateX - dy * 0.24));
+    rotateY = (rotateY + dx * 0.32) % 360;
+    rotateX = (rotateX - dy * 0.24) % 360;
     velocityY = dx * 0.18;
     velocityX = -dy * 0.14;
     lastX = event.clientX;
@@ -287,10 +287,10 @@ function initPosterSphere() {
     const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
     if (!keys.includes(event.key)) return;
     event.preventDefault();
-    if (event.key === 'ArrowLeft') rotateY -= 12;
-    if (event.key === 'ArrowRight') rotateY += 12;
-    if (event.key === 'ArrowUp') rotateX = Math.max(-70, rotateX - 10);
-    if (event.key === 'ArrowDown') rotateX = Math.min(70, rotateX + 10);
+    if (event.key === 'ArrowLeft') rotateY = (rotateY - 12) % 360;
+    if (event.key === 'ArrowRight') rotateY = (rotateY + 12) % 360;
+    if (event.key === 'ArrowUp') rotateX = (rotateX - 10) % 360;
+    if (event.key === 'ArrowDown') rotateX = (rotateX + 10) % 360;
     render();
   });
 
