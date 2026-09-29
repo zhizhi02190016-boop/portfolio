@@ -13,32 +13,99 @@ if (themeMeta && 'IntersectionObserver' in window) {
 const yearNode = document.querySelector('#year');
 if (yearNode) yearNode.textContent = new Date().getFullYear();
 
-const pageProgressKey = `portfolioPageProgress:${location.pathname}${location.search}`;
+const canonicalPage = (url) => {
+  const parsed = new URL(url, location.href);
+  const path = parsed.pathname.replace(/\/index(?:\.html)?$/, '/').replace(/\.html$/, '');
+  return `${path}${parsed.search}`;
+};
+const pageProgressKey = `portfolioPageProgress:${canonicalPage(location.href)}`;
+const pendingNavigationKey = 'portfolioPendingNavigation';
+const returnProgressKey = 'portfolioReturnProgress';
+const readStoredJson = (key) => {
+  try { return JSON.parse(sessionStorage.getItem(key)); } catch (_) { return null; }
+};
 const savePageProgress = () => {
-  sessionStorage.setItem(pageProgressKey, String(window.scrollY));
+  try { sessionStorage.setItem(pageProgressKey, String(window.scrollY)); } catch (_) { /* Private browsing may block storage. */ }
+};
+const rememberNavigation = (destination) => {
+  const target = new URL(destination, location.href);
+  if (target.origin !== location.origin || canonicalPage(target.href) === canonicalPage(location.href)) return;
+  savePageProgress();
+  try {
+    sessionStorage.setItem(pendingNavigationKey, JSON.stringify({
+      destination: canonicalPage(target.href),
+      source: location.href,
+      scrollY: window.scrollY,
+      parentReturn: history.state?.portfolioReturn || null,
+      savedAt: Date.now(),
+    }));
+  } catch (_) { /* Browser history remains the fallback. */ }
+};
+
+const pendingNavigation = readStoredJson(pendingNavigationKey);
+if (pendingNavigation?.destination === canonicalPage(location.href) && Date.now() - pendingNavigation.savedAt < 300000) {
+  history.replaceState({ ...history.state, portfolioReturn: pendingNavigation }, '');
+  sessionStorage.removeItem(pendingNavigationKey);
+}
+
+const restoreScroll = (scrollY) => {
+  if (!Number.isFinite(scrollY)) return;
+  const root = document.documentElement;
+  const previousBehavior = root.style.scrollBehavior;
+  root.style.scrollBehavior = 'auto';
+  window.scrollTo(0, scrollY);
+  requestAnimationFrame(() => {
+    window.scrollTo(0, scrollY);
+    requestAnimationFrame(() => { root.style.scrollBehavior = previousBehavior; });
+  });
 };
 
 window.addEventListener('pagehide', savePageProgress);
 window.addEventListener('pageshow', (event) => {
+  const returnProgress = readStoredJson(returnProgressKey);
+  const isExplicitReturn = returnProgress?.destination === canonicalPage(location.href);
   const navigation = performance.getEntriesByType('navigation')[0];
-  if (!event.persisted && navigation?.type !== 'back_forward') return;
-  const savedScrollY = Number(sessionStorage.getItem(pageProgressKey));
-  if (Number.isFinite(savedScrollY)) requestAnimationFrame(() => window.scrollTo(0, savedScrollY));
+  if (!isExplicitReturn && !event.persisted && navigation?.type !== 'back_forward') return;
+  if (isExplicitReturn) {
+    sessionStorage.removeItem(returnProgressKey);
+    if (returnProgress.parentReturn) history.replaceState({ ...history.state, portfolioReturn: returnProgress.parentReturn }, '');
+  }
+  const storedScrollY = isExplicitReturn ? returnProgress.scrollY : sessionStorage.getItem(pageProgressKey);
+  if (storedScrollY === null || storedScrollY === undefined) return;
+  const savedScrollY = Number(storedScrollY);
+  requestAnimationFrame(() => restoreScroll(savedScrollY));
 });
 
 document.querySelectorAll('[data-history-back]').forEach((link) => {
   link.addEventListener('click', (event) => {
     if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const source = history.state?.portfolioReturn;
+    if (source?.source && new URL(source.source).origin === location.origin) {
+      event.preventDefault();
+      try {
+        sessionStorage.setItem(returnProgressKey, JSON.stringify({
+          destination: canonicalPage(source.source), scrollY: source.scrollY,
+          parentReturn: source.parentReturn,
+        }));
+      } catch (_) { /* The source URL still works without stored scroll. */ }
+      location.replace(source.source);
+      return;
+    }
     let canGoBack = false;
     try {
       canGoBack = Boolean(document.referrer) && new URL(document.referrer).origin === location.origin && history.length > 1;
-    } catch (_) {
-      canGoBack = false;
-    }
+    } catch (_) { canGoBack = false; }
     if (!canGoBack) return;
     event.preventDefault();
     history.back();
   });
+});
+
+document.addEventListener('click', (event) => {
+  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const link = event.target.closest('a[href]');
+  if (!link || link.hasAttribute('data-history-back') || link.target === '_blank' || link.hasAttribute('download')) return;
+  rememberNavigation(link.href);
 });
 
 const posterProjects = [
@@ -346,7 +413,12 @@ document.querySelectorAll('.project').forEach((section) => {
   showcase.setAttribute('aria-label', '查看' + (section.querySelector('h2 .timestamp')?.textContent || '') + '作品页');
   showcase.addEventListener('click', (e) => {
     if (e.target.closest('a')) return;
+    rememberNavigation(showcaseTargets[key]);
     location.href = showcaseTargets[key];
   });
-  showcase.addEventListener('keydown', (e) => { if (e.key === 'Enter') location.href = showcaseTargets[key]; });
+  showcase.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    rememberNavigation(showcaseTargets[key]);
+    location.href = showcaseTargets[key];
+  });
 });
