@@ -151,3 +151,9 @@ body.mascot-ready .intro-zero .showcase .app-icon{visibility:hidden}
 @media(max-width:700px){.mascot-card{width:clamp(150px,45vw,190px)}}
 @media(max-width:700px){.intro-zero{min-height:1110px}.intro-zero .content{transform:translateY(-40px)}}
 @media(prefers-reduced-motion:reduce){.poster-card-face,.sphere-hub-face,.poster-wall-art{transition:none}}
+
+/* A compact, locally served numeral subset for the six section index cards. */
+@font-face{font-family:"Geource Card Digits";src:url("./fonts/geource-alt-digits.ttf") format("truetype");font-style:normal;font-weight:700;font-display:swap;unicode-range:U+0030-0039}
+.app-icon > span,.sphere-hub-face strong,.mascot-card{font-family:"Geource Card Digits",var(--rounded);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.07em}
+.app-icon > span,.sphere-hub-face strong{padding-left:.07em}
+.mascot-card{padding-left:.07em}
