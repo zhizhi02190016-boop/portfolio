@@ -1,6 +1,12 @@
 /* The 00 character uses full drawings registered by hip or hand position. */
 const $=id=>document.getElementById(id),card=$('mascot-card'),art=$('mascot-art'),front=$('mascot-front');
 const hero=document.querySelector('.hero'),about=document.querySelector('.intro-zero'),overlay=$('mascot-overlay');
+// Keep the card's shadow behind the entire drawing, not between the wrist
+// overlay and sleeve: otherwise the crop boundary creates a false colour seam.
+const cardShadow=card.cloneNode(false);
+cardShadow.removeAttribute('id');
+cardShadow.style.zIndex='0';cardShadow.style.background='transparent';
+overlay.prepend(cardShadow);card.style.boxShadow='none';
 const ns='http://www.w3.org/2000/svg';
 const node=(tag,parent,attrs={})=>{const e=document.createElementNS(ns,tag);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);parent.append(e);return e};
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),mix=(a,b,t)=>a+(b-a)*t;
@@ -27,6 +33,11 @@ for(let i=1;i<=1440;i++) {const t=i/240,u=.84*ease(t,.9,3.4),load=28*ease(t,.1,.
 function motion(p){const f=clamp((p-.58)/.42)*1440,i=Math.floor(f),j=Math.min(1440,i+1);return Object.fromEntries(['angle','swing','u'].map(k=>[k,mix(dynamics[i][k],dynamics[j][k],f-i)]))}
 const times=[0,.12,.17,.215,.26,.315,.365,.415,.465,.515,.555,.595,.645,.70,.755,.81];
 function frameAt(p){let i=0;while(i<15&&p>=times[i+1])i++;return i}
+function hangingDrop(p){
+ const t=clamp((p-.465)/.535)*6;
+ // A damped spring under the new load: a short downward overshoot, then settle.
+ return 1-Math.exp(-1.8*t)*(Math.cos(4.2*t)+(1.8/4.2)*Math.sin(4.2*t));
+}
 let ready=false;
 function render(p){
  const w=window.innerWidth,h=window.innerHeight,mobile=w<=700;
@@ -34,11 +45,12 @@ function render(p){
  const cellSize=mobile?Math.min(.44*h,370):Math.min(.52*h,470),scale=cellSize/313.5;
  const boundary=hero.getBoundingClientRect().bottom,size=card.offsetWidth;
  const cardY=about.getBoundingClientRect().top+(mobile?.40:.21)*about.offsetHeight
-   - (mobile?130:50)*ease(p,.65,1);
+   - (mobile?130:50)*ease(p,.65,1)+(mobile?22:30)*hangingDrop(p);
  const cx=mobile?w*.55:w*.67+size/2,cy=cardY+size/2,m=motion(p);
  const ax=size/2*m.u,ay=size/2*rim(m.u),r=m.angle;
  const gx=cx+ax*Math.cos(r)-ay*Math.sin(r),gy=cy+ax*Math.sin(r)+ay*Math.cos(r)-2;
  card.style.left=`${cx-size/2}px`;card.style.top=`${cardY}px`;card.style.transform=`rotate(${r*180/Math.PI}deg)`;card.style.opacity=ease(p,.12,.28);
+ for(const property of ['left','top','transform','opacity'])cardShadow.style[property]=card.style[property];
  if(mobile&&!reduced&&ready)about.querySelector('.content').style.opacity=ease(p,.75,.88);
  else about.querySelector('.content').style.opacity='';
  const i=frameAt(p),pose=poses[i],row=Math.floor(i/4),col=i%4,sy=rowTops[row],sh=rowBottoms[row]-sy;
