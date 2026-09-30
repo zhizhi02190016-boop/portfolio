@@ -157,3 +157,8 @@ body.mascot-ready .intro-zero .showcase .app-icon{visibility:hidden}
 .app-icon > span,.sphere-hub-face strong,.mascot-card{font-family:"Geource Card Digits",var(--rounded);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.07em}
 .app-icon > span,.sphere-hub-face strong{padding-left:.07em}
 .mascot-card{padding-left:.07em}
+
+/* 01/02: white copy and index numerals; keep all other section styling. */
+.retro .content,.handmirror .content,
+.retro .content .dark-link,.handmirror .content .dark-link,
+.retro .brand-idx.idx-soft,.handmirror .brand-idx.idx-mono{color:#fff}
