@@ -25,6 +25,16 @@ const sprite=node('g',art),cell=node('svg',sprite,{overflow:'hidden',preserveAsp
 node('image',cell,{href:'images/mascot-cel-atlas.png',width:1254,height:1254});
 const fingerGroup=node('g',front),fingerCell=node('svg',fingerGroup,{overflow:'hidden',preserveAspectRatio:'none'});
 node('image',fingerCell,{href:'images/mascot-cel-atlas.png',width:1254,height:1254});
+// Sharpen the raster atlas after it is enlarged, keeping the drawn edges crisp.
+for(const [surface,subject,id] of [[art,sprite,'mascot-sharp-body'],[front,fingerGroup,'mascot-sharp-hand']]){
+ const defs=node('defs',surface),filter=node('filter',defs,{id,x:'-10%',y:'-10%',width:'120%',height:'120%',colorInterpolationFilters:'sRGB'});
+ node('feConvolveMatrix',filter,{order:3,kernelMatrix:'0 -0.25 0 -0.25 2 -0.25 0 -0.25 0',edgeMode:'duplicate',preserveAlpha:'true',result:'sharp'});
+ node('feMorphology',filter,{in:'SourceAlpha',operator:'dilate',radius:'.55',result:'rim'});
+ node('feFlood',filter,{floodColor:'#c7d3d9',floodOpacity:'.32',result:'rimColor'});
+ node('feComposite',filter,{in:'rimColor',in2:'rim',operator:'in',result:'edge'});
+ const merged=node('feMerge',filter);node('feMergeNode',merged,{in:'edge'});node('feMergeNode',merged,{in:'sharp'});
+ subject.setAttribute('filter',`url(#${id})`);
+}
 const rim=u=>Math.abs(u)<=.48?1:.48+Math.sqrt(Math.max(0,.52**2-(Math.abs(u)-.48)**2));
 const dynamics=[{angle:0,swing:0,u:0}];let theta=0,omega=0,swing=0,sv=-.36;
 for(let i=1;i<=1440;i++) {const t=i/240,u=.84*ease(t,.9,3.4),load=28*ease(t,.1,.55);
@@ -33,11 +43,6 @@ for(let i=1;i<=1440;i++) {const t=i/240,u=.84*ease(t,.9,3.4),load=28*ease(t,.1,.
 function motion(p){const f=clamp((p-.58)/.42)*1440,i=Math.floor(f),j=Math.min(1440,i+1);return Object.fromEntries(['angle','swing','u'].map(k=>[k,mix(dynamics[i][k],dynamics[j][k],f-i)]))}
 const times=[0,.12,.17,.215,.26,.315,.365,.415,.465,.515,.555,.595,.645,.70,.755,.81];
 function frameAt(p){let i=0;while(i<15&&p>=times[i+1])i++;return i}
-function hangingDrop(p){
- const t=clamp((p-.465)/.535)*6;
- // A damped spring under the new load: a short downward overshoot, then settle.
- return 1-Math.exp(-1.8*t)*(Math.cos(4.2*t)+(1.8/4.2)*Math.sin(4.2*t));
-}
 let ready=false;
 function render(p){
  const w=window.innerWidth,h=window.innerHeight,mobile=w<=700;
@@ -45,7 +50,7 @@ function render(p){
  const cellSize=mobile?Math.min(.44*h,370):Math.min(.52*h,470),scale=cellSize/313.5;
  const boundary=hero.getBoundingClientRect().bottom,size=card.offsetWidth;
  const cardY=about.getBoundingClientRect().top+(mobile?.40:.21)*about.offsetHeight
-   - (mobile?130:50)*ease(p,.65,1)+(mobile?22:30)*hangingDrop(p);
+   - (mobile?130:50)*ease(p,.65,1)+(mobile?22:30)*ease(p,.465,.70);
  const cx=mobile?w*.55:w*.67+size/2,cy=cardY+size/2,m=motion(p);
  const ax=size/2*m.u,ay=size/2*rim(m.u),r=m.angle;
  const gx=cx+ax*Math.cos(r)-ay*Math.sin(r),gy=cy+ax*Math.sin(r)+ay*Math.cos(r)-2;
@@ -72,11 +77,12 @@ function render(p){
  const pivot=pose.fist?pose.fist.map(v=>v*scale):pose.hip.map(v=>v*scale);
  sprite.setAttribute('transform',`translate(${x} ${y}) rotate(${rotation} ${pivot[0]} ${pivot[1]})`);
  sprite.style.visibility=ready?'visible':'hidden';
- // Show the whole gripping hand and wrist above the card. The crop shares
- // the body's anchor and rotation so its lower edge joins the sleeve exactly.
- fingerGroup.style.visibility=ready&&i>=8?'visible':'hidden';
- if(i>=8){const fx=pose.fist[0],fy=pose.fist[1];fingerCell.setAttribute('viewBox',`${col*313.5+fx-19} ${sy+fy-16} 38 50`);
-   fingerCell.setAttribute('x',-19*scale);fingerCell.setAttribute('y',-16*scale);fingerCell.setAttribute('width',38*scale);fingerCell.setAttribute('height',50*scale);
+ // The hand passes behind the card once its weight begins to rotate the card.
+ // The drawing beneath is still anchored by the fist, so the arm stays attached.
+ fingerGroup.style.visibility=ready&&i>=8&&p<.68?'visible':'hidden';
+ if(i>=8){const fx=pose.fist[0],fy=pose.fist[1],conceal=50*ease(p,.58,.68),visible=Math.max(.01,50-conceal);
+   fingerCell.setAttribute('viewBox',`${col*313.5+fx-19} ${sy+fy-16+conceal} 38 ${visible}`);
+   fingerCell.setAttribute('x',-19*scale);fingerCell.setAttribute('y',(-16+conceal)*scale);fingerCell.setAttribute('width',38*scale);fingerCell.setAttribute('height',visible*scale);
    fingerGroup.setAttribute('transform',`translate(${gx} ${gy}) rotate(${rotation})`);}
  window.mascotState={p,frame:i,scale,x,y,grip:[gx,gy],angle:r*180/Math.PI,ready};
 }
