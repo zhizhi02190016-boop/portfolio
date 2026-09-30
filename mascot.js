@@ -39,7 +39,6 @@ function render(p){
  const ax=size/2*m.u,ay=size/2*rim(m.u),r=m.angle;
  const gx=cx+ax*Math.cos(r)-ay*Math.sin(r),gy=cy+ax*Math.sin(r)+ay*Math.cos(r)-2;
  card.style.left=`${cx-size/2}px`;card.style.top=`${cardY}px`;card.style.transform=`rotate(${r*180/Math.PI}deg)`;card.style.opacity=ease(p,.12,.28);
- overlay.style.opacity=1-ease(window.scrollY,mobile?900:740,mobile?1060:900);
  if(mobile&&!reduced&&ready)about.querySelector('.content').style.opacity=ease(p,.75,.88);
  else about.querySelector('.content').style.opacity='';
  const i=frameAt(p),pose=poses[i],row=Math.floor(i/4),col=i%4,sy=rowTops[row],sh=rowBottoms[row]-sy;
@@ -61,10 +60,11 @@ function render(p){
  const pivot=pose.fist?pose.fist.map(v=>v*scale):pose.hip.map(v=>v*scale);
  sprite.setAttribute('transform',`translate(${x} ${y}) rotate(${rotation} ${pivot[0]} ${pivot[1]})`);
  sprite.style.visibility=ready?'visible':'hidden';
- // Only the finger tips come in front of the card. The entire body stays behind it.
+ // Show the whole gripping hand and wrist above the card. The crop shares
+ // the body's anchor and rotation so its lower edge joins the sleeve exactly.
  fingerGroup.style.visibility=ready&&i>=8?'visible':'hidden';
- if(i>=8){const fx=pose.fist[0],fy=pose.fist[1];fingerCell.setAttribute('viewBox',`${col*313.5+fx-11} ${sy+fy-7} 22 13`);
-   fingerCell.setAttribute('x',-11*scale);fingerCell.setAttribute('y',-7*scale);fingerCell.setAttribute('width',22*scale);fingerCell.setAttribute('height',13*scale);
+ if(i>=8){const fx=pose.fist[0],fy=pose.fist[1];fingerCell.setAttribute('viewBox',`${col*313.5+fx-19} ${sy+fy-16} 38 50`);
+   fingerCell.setAttribute('x',-19*scale);fingerCell.setAttribute('y',-16*scale);fingerCell.setAttribute('width',38*scale);fingerCell.setAttribute('height',50*scale);
    fingerGroup.setAttribute('transform',`translate(${gx} ${gy}) rotate(${rotation})`);}
  window.mascotState={p,frame:i,scale,x,y,grip:[gx,gy],angle:r*180/Math.PI,ready};
 }
