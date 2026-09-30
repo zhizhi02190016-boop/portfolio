@@ -138,4 +138,16 @@ video:fullscreen,video:-webkit-full-screen{width:100vw!important;height:100vh!im
 @media(max-width:1200px){.poster-wall{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:780px){.poster-wall{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 16px}.poster-detail-frame{min-height:620px;padding:44px 20px}}
 @media(max-width:520px){.sketch{min-height:760px}.poster-sphere-showcase{min-height:500px!important;margin-bottom:-120px}.poster-sphere-stage{transform:scale(1.05)}.poster-overview-hero{padding-top:64px}.poster-overview-hero h1{font-size:clamp(32px,9vw,40px);overflow-wrap:anywhere}.poster-wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 14px}.poster-wall-label{display:block}.poster-wall-label small{display:block;margin-top:4px}.poster-detail-frame{min-height:500px;padding:30px 14px}.poster-detail-art{width:100%;border-width:7px}.poster-detail-summary{font-size:16px}}
+
+/* 00 人物：绘制层跟随首页滚动，保持其他作品区布局与点击区域不变。 */
+.mascot-overlay{position:fixed;inset:0;z-index:8;display:none;pointer-events:none;overflow:hidden;isolation:isolate}
+body.mascot-ready .mascot-overlay{display:block}
+body.mascot-ready .intro-zero .showcase .app-icon{visibility:hidden}
+.mascot-art{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:1}
+.mascot-front{z-index:3}
+.mascot-card{position:absolute;z-index:2;display:grid;place-items:center;width:clamp(160px,20vw,240px);aspect-ratio:1;border-radius:26%;color:#fff;background:linear-gradient(145deg,#8d969d,#121417);box-shadow:0 25px 55px #0008;font:850 clamp(65px,7vw,90px)/1 var(--rounded);letter-spacing:-.08em;transform-origin:center}
+.intro-zero{min-height:950px}
+@media(max-width:975px){.intro-zero{min-height:850px}}
+@media(max-width:700px){.mascot-card{width:clamp(150px,45vw,190px)}}
+@media(max-width:700px){.intro-zero{min-height:1110px}.intro-zero .content{transform:translateY(-40px)}}
 @media(prefers-reduced-motion:reduce){.poster-card-face,.sphere-hub-face,.poster-wall-art{transition:none}}
