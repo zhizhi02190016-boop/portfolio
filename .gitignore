@@ -1,3 +1,6 @@
 tools/*.png
 tools/frames/
 tools/qa/
+
+# Local Netlify folder
+.netlify
