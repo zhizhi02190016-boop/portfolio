@@ -25,14 +25,12 @@ const sprite=node('g',art),cell=node('svg',sprite,{overflow:'hidden',preserveAsp
 node('image',cell,{href:'images/mascot-cel-atlas.png',width:1254,height:1254});
 const fingerGroup=node('g',front),fingerCell=node('svg',fingerGroup,{overflow:'hidden',preserveAspectRatio:'none'});
 node('image',fingerCell,{href:'images/mascot-cel-atlas.png',width:1254,height:1254});
-// Sharpen the raster atlas after it is enlarged, keeping the drawn edges crisp.
+// Remove low-alpha fringe from the atlas, then sharpen without adding a pale rim.
 for(const [surface,subject,id] of [[art,sprite,'mascot-sharp-body'],[front,fingerGroup,'mascot-sharp-hand']]){
  const defs=node('defs',surface),filter=node('filter',defs,{id,x:'-10%',y:'-10%',width:'120%',height:'120%',colorInterpolationFilters:'sRGB'});
- node('feConvolveMatrix',filter,{order:3,kernelMatrix:'0 -0.25 0 -0.25 2 -0.25 0 -0.25 0',edgeMode:'duplicate',preserveAlpha:'true',result:'sharp'});
- node('feMorphology',filter,{in:'SourceAlpha',operator:'dilate',radius:'.55',result:'rim'});
- node('feFlood',filter,{floodColor:'#c7d3d9',floodOpacity:'.32',result:'rimColor'});
- node('feComposite',filter,{in:'rimColor',in2:'rim',operator:'in',result:'edge'});
- const merged=node('feMerge',filter);node('feMergeNode',merged,{in:'edge'});node('feMergeNode',merged,{in:'sharp'});
+ const clean=node('feComponentTransfer',filter,{in:'SourceGraphic',result:'clean'});
+ node('feFuncA',clean,{type:'linear',slope:'1.4',intercept:'-.2'});
+ node('feConvolveMatrix',filter,{in:'clean',order:3,kernelMatrix:'0 -0.25 0 -0.25 2 -0.25 0 -0.25 0',edgeMode:'duplicate',preserveAlpha:'true'});
  subject.setAttribute('filter',`url(#${id})`);
 }
 const rim=u=>Math.abs(u)<=.48?1:.48+Math.sqrt(Math.max(0,.52**2-(Math.abs(u)-.48)**2));
